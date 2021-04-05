@@ -1,0 +1,62 @@
+git clone https://github.com/8devices/Caraboot.git
+git checkout v2.8
+
+
+ar7240> pri
+bootargs=
+bootcmd=bootm 0x9f050000
+baudrate=115200
+ethaddr=0x00:0xaa:0xbb:0xcc:0xdd:0xee
+ethact=eth0
+bootdelay=3
+ipaddr=192.168.99.254
+serverip=192.168.99.1
+bootfile=/caramb/firmware.bin
+led_config=1:1:0:0
+gpio_config=0x18040000:0x000002:0/0x18040008:0:0x0000002
+stdin=serial
+stdout=serial
+stderr=serial
+
+Environment size: 304/65532 bytes
+
+Env clear
+erase 0x9f040000 +0x10000
+
+
+setenv bootdelay 3
+setenv ipaddr 192.168.99.254
+setenv serverip 192.168.99.1
+setenv bootfile /caramb/firmware.bin
+setenv bootfile /caramb/knight.bin
+
+tftp
+erase 0x9f050000 +${filesize}; cp.b 0x81000000 0x9f050000 ${filesize}; reset
+
+
+U-BOOT:
+tftpboot 80060000 /caramb/u-boot.bin
+erase 0x9f000000 +${filesize}; cp.b 0x80060000 0x9f000000 ${filesize}
+
+setenv uboot_image /caramb/u-boot.bin 
+
+U-BOOT:
+tftpboot 80060000 /caramb/u-boot.bin
+erase 0x9f000000 +${filesize}; cp.b 0x80060000 0x9f000000 ${filesize}
+
+KERNEL
+tftp 0x81000000 /caramb/carambola2-kernel.bin
+tftp 0x81000000 /caramb/carambola2-kernel-11.bin
+tftp 0x81000000 /caramb/carambola2-kernel-00.bin
+tftp 0x81000000 /caramb/carambola2-kernel-01.bin
+tftp 0x81000000 /caramb/carambola2-kernel-10.bin
+
+erase 0x9f050000 +${filesize}; cp.b 0x81000000 0x9f1B0000 ${filesize}; reset
+
+ENV CLEAR
+erase 0x9f040000 +0x10000
+
+
+if tftpboot 80060000 $uboot_image; then echo OK; else echo FAILED; fi
+
+tftpboot 80060000 /caramb/u-boot.bin && erase 0x9f000000 +${filesize} && cp.b 0x80060000 0x9f000000 ${filesize}

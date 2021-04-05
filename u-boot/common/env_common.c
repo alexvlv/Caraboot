@@ -228,13 +228,7 @@ void env_relocate (void)
 	env_get_char = env_get_char_memory;
 
 	if (gd->env_valid == 0) {
-#if defined(CONFIG_GTH)	|| defined(CFG_ENV_IS_NOWHERE)	/* Environment not changable */
-		puts ("Using default environment\n\n");
-#else
-		puts ("*** Warning - bad CRC, using default environment\n\n");
-		SHOW_BOOT_PROGRESS (-1);
-#endif
-
+		puts ("Using default environment\n");
 		if (sizeof(default_environment) > ENV_SIZE)
 		{
 			puts ("*** Error - default environment is too large\n\n");

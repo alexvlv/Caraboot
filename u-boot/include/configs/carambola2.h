@@ -5,6 +5,10 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
+#define xstr(s)   str(s)
+#define str(s)	  #s
+
+
 #include <configs/ar7240.h>
 #include <config.h>
 /*-----------------------------------------------------------------------
@@ -156,7 +160,23 @@
 #define CFG_ENV_ADDR		0x9f040000
 #define CFG_ENV_SIZE		0x10000
 
-#define CONFIG_BOOTCOMMAND "bootm 0x9f050000"
+#define CFG_FW_START_IN_FLASH 	0x9f050000
+
+#define CONFIG_BOOTCOMMAND "bootm " xstr(CFG_FW_START_IN_FLASH) 
+
+#ifdef CONFIG_BOOTDELAY
+#undef CONFIG_BOOTDELAY
+#endif 
+#define CONFIG_BOOTDELAY	1
+
+#define CONFIG_EXTRA_ENV_SETTINGS	\
+	"bootfile=/caramb/firmware.bin\0"\
+	"led_config=1:1:0:0 \0" \
+	"gpio_config=0x18040000:0x000002:0/0x18040008:0:0x0000002\0" \
+	"ping=ping $serverip\0" \
+	"upuboot=tftp 80060000 /caramb/u-boot.bin &&  && erase 0x9f000000 +${filesize} && cp.b 0x80060000 0x9f000000 ${filesize}\0" \
+	"upbin=tftp 0x81000000 $bootfile && erase " xstr(CFG_FW_START_IN_FLASH) " +${filesize} && cp.b 0x81000000 " xstr(CFG_FW_START_IN_FLASH) " ${filesize}\0" \
+	"clear=erase " xstr(CFG_ENV_ADDR) " +" xstr(CFG_ENV_SIZE) "\0"
 
 /* DDR init values */
 
@@ -212,9 +232,10 @@
 
 #define CFG_ATHRS26_PHY  1
 
-#define CONFIG_IPADDR   192.168.2.100
-#define CONFIG_SERVERIP 192.168.2.254
-#define CONFIG_ETHADDR 0x00:0xaa:0xbb:0xcc:0xdd:0xee
+#define CONFIG_IPADDR   192.168.99.111
+#define CONFIG_SERVERIP 192.168.99.1
+#define CONFIG_NETMASK	255.255.255.0
+#define CONFIG_ETHADDR 0x00:0xaa:0xbb:0xcc:0xdd:0x55
 #define CFG_FAULT_ECHO_LINK_DOWN    1
 
 #define CFG_PHY_ADDR 0 

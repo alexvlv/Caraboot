@@ -213,8 +213,7 @@ int checkboard (char *board_string)
 int checkboard (void)
 {
     printf("=====================================\n");
-    printf("Caraboot "CARABOOT_RELEASE" (AR9331) U-boot\n");
-    printf("http://www.8devices.com/\n");
+    printf(" Atheros "CARABOOT_RELEASE" (AR9331) U-boot\n");
     printf("-------------------------------------\n");
     return 0;
 }
