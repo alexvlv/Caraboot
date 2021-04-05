@@ -1,13 +1,12 @@
+# $Id$
 export CARABOOT_RELEASE=v2.8
 TARGET_NAME=Caraboot-$(CARABOOT_RELEASE)
 TARGET_DIR=/work/srv/tftp/caramb
-TARGET_FILE=$(TARGET_NAME)_Rev.$(SVN).bin
+TARGET_FILE=$(TARGET_NAME)-$(GITREV).bin
 
 export BUILD_TOPDIR=$(PWD)
 export STAGING_DIR=$(BUILD_TOPDIR)/tmp
 export UBOOTDIR=$(BUILD_TOPDIR)/u-boot
-
-
 
 ### Toolchain config ###
 CONFIG_TOOLCHAIN_PREFIX=/opt/mips/OpenWrt-Toolchain-ar71xx-for-mips_r2-gcc-4.6-linaro_uClibc-0.9.33.2/toolchain-mips_r2_gcc-4.6-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-
@@ -22,13 +21,10 @@ CONFIG_TOOLCHAIN_PREFIX=/opt/mips/OpenWrt-Toolchain-ar71xx-for-mips_r2-gcc-4.6-l
 #export PATH:=$(BUILD_TOPDIR)/toolchain/bin/:$(PATH)
 ########################
 
-URL=http://server/svn/ARM-Linux/platforms/Carambola/Caraboot
-REVISIONFILE = revision.txt
-SVNCMD = LC_ALL=C svn info $(URL) | grep "Rev:" | cut -b 19- | tr -d "\n" > $(REVISIONFILE); \
-	if [ ! -s $(REVISIONFILE) ]; then echo -n Unknown > $(REVISIONFILE); fi
-SVN:=$(shell  if [ ! -s $(REVISIONFILE) ]; then  $(SVNCMD) fi; cat $(REVISIONFILE) )
+GITVER:=$(shell sh "$(BUILD_TOPDIR)/git.sh")
+GITREV:=$(shell echo "$(GITVER)" | cut -f 1 -d' ' | tr '*' 'M' )
+EXTRAVERSION := "-$(GITVER)"
 
-EXTRAVERSION := "-$(CARABOOT_RELEASE) SVN Rev.$(SVN)"
 
 export CROSS_COMPILE=$(CONFIG_TOOLCHAIN_PREFIX)
 export UBOOT_GCC_4_3_3_EXTRA_CFLAGS=-fPIC
@@ -51,7 +47,6 @@ MAKECMD=$(MAKE) --no-print-directory ARCH=mips EXTRAVERSION=$(EXTRAVERSION) -C $
 
 .PHONY: all
 all:
-	@$(MAKE) --no-print-directory svn
 	@$(MAKE) --no-print-directory install
 
 install: $(UBOOTDIR)/$(UBOOT_BINARY)
@@ -62,12 +57,9 @@ install: $(UBOOTDIR)/$(UBOOT_BINARY)
 	@cp -f $(BUILD_TOPDIR)/$(TARGET_FILE) $(TARGET_DIR)
 	@echo Install done
 
-.PHONY: svn
-svn:
-	@rm -f $(REVISIONFILE)
-	@$(SVNCMD) 
-	@echo "$(TARGET_NAME) SVN Rev.:$(SVN)"
-
+.PHONY: git
+git:
+	@echo $(GITVER)
 
 .PHONY: bin
 bin: 
@@ -75,7 +67,7 @@ bin:
 	$(MAKE) $(UBOOTDIR)/$(UBOOT_BINARY)
 
 $(UBOOTDIR)/$(UBOOT_BINARY): $(UBOOTDIR)/include/config.h $(REVISIONFILE) Makefile
-	@echo Build [$(TARGET_NAME)] SVN Rev.:$(SVN)
+	@echo Build [$(TARGET_NAME)] GIT Rev.:$(GITVER)
 	@$(MAKECMD) all
 	@echo Build done
 
