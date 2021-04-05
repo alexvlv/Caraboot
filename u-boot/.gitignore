@@ -12,3 +12,5 @@ u-boot.srec
 System.map
 include/config.h
 include/config.mk
+include/asm
+include/asm-mips/arch

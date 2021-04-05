@@ -7,9 +7,12 @@ export BUILD_TOPDIR=$(PWD)
 export STAGING_DIR=$(BUILD_TOPDIR)/tmp
 export UBOOTDIR=$(BUILD_TOPDIR)/u-boot
 
+
+
 ### Toolchain config ###
-OPENWRT_PATH=/work/projects/OpenWrt/Carambola/ImageBuilder/BarrierBreaker-14.07
-CONFIG_TOOLCHAIN_PREFIX=$(OPENWRT_PATH)/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-
+CONFIG_TOOLCHAIN_PREFIX=/opt/mips/OpenWrt-Toolchain-ar71xx-for-mips_r2-gcc-4.6-linaro_uClibc-0.9.33.2/toolchain-mips_r2_gcc-4.6-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-
+#OPENWRT_PATH=/work/projects/OpenWrt/Carambola/ImageBuilder/BarrierBreaker-14.07
+#CONFIG_TOOLCHAIN_PREFIX=$(OPENWRT_PATH)/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-
 
 #buildroot
 #CONFIG_TOOLCHAIN_PREFIX=/opt/build/toolchain-mipsbe-4.7.3/bin/mips-linux-
