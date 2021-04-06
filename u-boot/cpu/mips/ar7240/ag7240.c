@@ -523,11 +523,10 @@ int ag7240_enet_initialize(bd_t * bis)
 
         if(ar7240_reg_rd(AR7240_RESET)!=0)
             ar7240_reg_wr(AR7240_RESET,0);
-        debug("ag7240_enet_initialize: is_ar933x!\n");
     }
 
     for (i = 0;i < CFG_AG7240_NMACS;i++) {
-    printf ("ag7240_enet_initialize devinit: nmac:%d...\n",i);
+
     if ((dev[i] = (struct eth_device *) malloc(sizeof (struct eth_device))) == NULL) {
         puts("malloc failed\n");
         return 0;
@@ -555,11 +554,8 @@ int ag7240_enet_initialize(bd_t * bis)
     dev[i]->recv = ag7240_recv;
     dev[i]->priv = (void *)ag7240_macs[i];
     }
-
-    debug("ag7240_enet_initialize : CFG_AG7240_NMACS ?\n");
     for (i = 0;i < CFG_AG7240_NMACS;i++) {
         eth_register(dev[i]);
-        debug("ag7240_enet_initialize : eth_register %d OK\n", i);
 #if(CONFIG_COMMANDS & CFG_CMD_MII)
         miiphy_register(dev[i]->name, ag7240_miiphy_read, ag7240_miiphy_write);
 #endif

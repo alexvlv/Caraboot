@@ -84,4 +84,4 @@ $(REVISIONFILE):
 	
 clean:
 	@rm -f $(REVISIONFILE) $(BUILD_TOPDIR)/$(TARGET_FILE)
-#	@$(MAKECMD) distclean
+	@$(MAKECMD) distclean

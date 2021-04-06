@@ -464,7 +464,7 @@ void board_init_r (gd_t *id, ulong dest_addr)
 #endif
 	eth_initialize(gd->bd);
 #endif
-	puts ("\nNet init done!\n");
+
 #if defined(CONFIG_ATH_NAND_SUPPORT) && !defined(CONFIG_ATH_NAND_BR)
 #ifdef ATH_SPI_NAND
 	ath_spi_nand_init();
