@@ -5,15 +5,19 @@ static inline void ag7240_phy_setup(int unit)
 {
 #ifdef CONFIG_AR7242_S16_PHY
     if ((is_ar7242() || is_wasp()) && (unit==0)) {
+        printf("athrs16_phy_setup %d ???\n",unit);
         athrs16_phy_setup(unit);
     } else
 #endif
     {
+        printf("athrs26_phy_setup %d ???????????????\n",unit);
         athrs26_phy_setup(unit);
 #ifdef CONFIG_F1E_PHY
+        printf("athr_phy_setup %d ???\n",unit);
         athr_phy_setup(unit);
 #endif
     }
+    printf("ag7240_phy_setup %d OK!!!\n",unit);
 }
 
 static inline void ag7240_phy_link(int unit, int *link)

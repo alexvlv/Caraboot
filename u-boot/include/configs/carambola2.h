@@ -247,7 +247,8 @@
 #define CFG_AG7100_GE0_RMII             1
 
 #define CFG_BOOTM_LEN	(16 << 20) /* 16 MB */
-#undef  DEBUG
+#define DEBUG
+#define S26_PHY_DEBUG 1
 #define CFG_CONSOLE_INFO_QUIET		/* don't print console @ startup*/
 #define CONFIG_SHOW_BOOT_PROGRESS	/* use LEDs to show boot status*/
 #define CONFIG_SHOW_ACTIVITY

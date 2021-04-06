@@ -136,6 +136,7 @@ int eth_initialize(bd_t *bis)
 
 #if defined(CONFIG_MII) || (CONFIG_COMMANDS & CFG_CMD_MII)
 	miiphy_init();
+	puts ("miiphy_init done!\n");
 #endif
 
 #ifdef CONFIG_DB64360
@@ -233,9 +234,11 @@ int eth_initialize(bd_t *bis)
 #endif
 #if defined(CONFIG_AR7240)
 	ag7240_enet_initialize(bis);
+	puts ("ag7240_enet_initialize  done!\n");
 #endif
 #if defined(CONFIG_ATHEROS) && !defined(CONFIG_ATH_EMULATION)
 	ath_gmac_enet_initialize(bis);
+	puts ("ath_gmac_enet_initialize  done!\n");
 #endif
 
 	if (!eth_devices) {
