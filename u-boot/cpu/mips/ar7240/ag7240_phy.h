@@ -9,7 +9,6 @@ static inline void ag7240_phy_setup(int unit)
     } else
 #endif
     {
-        printf("athrs26_phy_setup %d ...\n",unit);
         athrs26_phy_setup(unit);
 #ifdef CONFIG_F1E_PHY
         athr_phy_setup(unit);
