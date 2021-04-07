@@ -83,5 +83,7 @@ $(REVISIONFILE):
 	$(MAKE) --no-print-directory svn
 	
 clean:
-	@rm -f $(REVISIONFILE) $(BUILD_TOPDIR)/$(TARGET_FILE)
+	@rm -f $(REVISIONFILE) $(BUILD_TOPDIR)/$(TARGET_FILE) $(UBOOTDIR)/u-boot $(UBOOTDIR)/u-boot.*
+
+distclean: clean
 	@$(MAKECMD) distclean
