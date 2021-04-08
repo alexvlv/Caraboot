@@ -474,9 +474,11 @@ athrs26_phy_setup(int ethUnit)
         else
             sysMsDelay(3000);
     } else {
-        printf("After the phy is reset, it takes a little while before %d ...",ethUnit);
-        sysMsDelay(1000);
-        printf(" waiting done!\n");
+        if (ethUnit == ENET_UNIT_WAN) {
+            printf("\nAfter the phy is reset, it takes a little:  %d ...",ethUnit);
+            sysMsDelay(1000);
+            printf(" waiting done!\n");
+        }
     }
 
     /*
