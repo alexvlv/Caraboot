@@ -426,8 +426,6 @@ athrs26_phy_setup(int ethUnit)
     uint32_t  rd_val = 0;
 #endif
     uint32_t  ar7240_revid;
-    
-    printf("athrs26_phy_setup %d ...\n",ethUnit);
 
     /* See if there's any configuration data for this enet */
     /* start auto negogiation on each phy */
@@ -475,9 +473,10 @@ athrs26_phy_setup(int ethUnit)
             sysMsDelay(3000);
     } else {
         if (ethUnit == ENET_UNIT_WAN) {
-            printf("\nAfter the phy is reset, it takes a little:  %d ...",ethUnit);
-            sysMsDelay(1000);
-            printf(" waiting done!\n");
+            //printf("\nAfter the phy is reset, it takes a little:  %d ...",ethUnit);
+            putc('.');
+            sysMsDelay(300);
+            putc('+');
         }
     }
 
@@ -549,7 +548,6 @@ athrs26_phy_setup(int ethUnit)
             ethUnit, 
             s26_rd_phy(ATHR_PHYADDR(phyUnit),ATHR_PHY_SPEC_STATUS)));
     }
-    printf("athrs26_phy_setup %d return\n",ethUnit);
     return (liveLinks > 0);
 }
 
