@@ -509,7 +509,7 @@ int ag7240_enet_initialize(bd_t * bis)
 
     debug("ag7240_enet_initialize...\n");
 
-    if(is_ar933x() ) {
+    //if(is_ar933x() ) {
         u32 rd = 0x0;
 
         /* 
@@ -523,7 +523,7 @@ int ag7240_enet_initialize(bd_t * bis)
 
         if(ar7240_reg_rd(AR7240_RESET)!=0)
             ar7240_reg_wr(AR7240_RESET,0);
-    }
+    //}
 
     for (i = 0;i < CFG_AG7240_NMACS;i++) {
 
@@ -574,13 +574,14 @@ int ag7240_enet_initialize(bd_t * bis)
 
 
            ar7240_reg_rmw_set(AR7240_RESET, mask);
-           if(!is_ar933x())
+           putc('.');
+           //if(!is_ar933x())
                udelay(1000 * 100);
 
            ar7240_reg_rmw_clear(AR7240_RESET, mask);
-           if(!is_ar933x())
+           putc('.');
+           //if(!is_ar933x())
                udelay(1000 * 100);
-
            if(!is_ar933x())
                udelay(10 * 1000);
         }
@@ -588,7 +589,8 @@ int ag7240_enet_initialize(bd_t * bis)
         ag7240_hw_start(ag7240_macs[i]);
         ag7240_setup_fifos(ag7240_macs[i]);
 
-        if(!is_ar933x())
+        putc('.'); 
+        //if(!is_ar933x())
             udelay(100 * 1000);
 
         {
